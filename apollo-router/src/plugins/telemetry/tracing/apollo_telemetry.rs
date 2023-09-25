@@ -382,7 +382,7 @@ impl Exporter {
             SUBGRAPH_SPAN_NAME => {
                 let subgraph_name = span
                     .attributes
-                    .get(&Key::from_static_str("apollo.subgraph.name"))
+                    .get(&SUBGRAPH_NAME)
                     .and_then(extract_string)
                     .unwrap_or_default();
                 let error_configuration = self
@@ -847,7 +847,7 @@ mod test {
     use opentelemetry::Value;
     use prost::Message;
     use serde_json::json;
-    use crate::plugins::telemetry::apollo::{ErrorConfiguration};
+    use crate::plugins::telemetry::apollo::ErrorConfiguration;
     use crate::plugins::telemetry::apollo_exporter::proto::reports::Trace;
     use crate::plugins::telemetry::apollo_exporter::proto::reports::trace::query_plan_node::{DeferNodePrimary, DeferredNode, ResponsePathElement};
     use crate::plugins::telemetry::apollo_exporter::proto::reports::trace::{QueryPlanNode, Node, Error};
