@@ -263,6 +263,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "apollo-parser"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c16e9726efb987af1adb74bd5eac12bb64135dded68a587dd7ff9ee000129dda"
+dependencies = [
+ "memchr",
+ "rowan",
+ "thiserror",
+]
+
+[[package]]
 name = "apollo-router"
 version = "1.32.0"
 dependencies = [
@@ -270,7 +281,7 @@ dependencies = [
  "anyhow",
  "apollo-compiler 0.11.2",
  "apollo-encoder",
- "apollo-parser 0.6.2",
+ "apollo-parser 0.7.0",
  "arc-swap",
  "askama",
  "async-compression",
@@ -415,7 +426,7 @@ dependencies = [
 name = "apollo-router-benchmarks"
 version = "1.32.0"
 dependencies = [
- "apollo-parser 0.6.2",
+ "apollo-parser 0.7.0",
  "apollo-router",
  "apollo-smith",
  "arbitrary",
@@ -5447,7 +5458,7 @@ dependencies = [
 name = "router-fuzz"
 version = "0.0.0"
 dependencies = [
- "apollo-parser 0.6.2",
+ "apollo-parser 0.7.0",
  "apollo-smith",
  "env_logger",
  "libfuzzer-sys",
