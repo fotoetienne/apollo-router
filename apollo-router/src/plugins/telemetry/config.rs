@@ -350,28 +350,38 @@ pub(crate) struct RequestPropagation {
 }
 
 #[derive(Debug, Clone, Deserialize, JsonSchema)]
-#[serde(deny_unknown_fields, default)]
+#[serde(deny_unknown_fields)]
 #[non_exhaustive]
 pub(crate) struct Trace {
     /// The trace service name
+    #[serde(default = "default_service_name")]
     pub(crate) service_name: String,
     /// The trace service namespace
+    #[serde(default)]
     pub(crate) service_namespace: String,
     /// The sampler, always_on, always_off or a decimal between 0.0 and 1.0
+    #[serde(default = "default_sampler")]
     pub(crate) sampler: SamplerOption,
     /// Whether to use parent based sampling
+    #[serde(default = "default_parent_based_sampler")]
     pub(crate) parent_based_sampler: bool,
     /// The maximum events per span before discarding
+    #[serde(default = "default_max_events_per_span")]
     pub(crate) max_events_per_span: u32,
     /// The maximum attributes per span before discarding
+    #[serde(default = "default_max_attributes_per_span")]
     pub(crate) max_attributes_per_span: u32,
     /// The maximum links per span before discarding
+    #[serde(default = "default_max_links_per_span")]
     pub(crate) max_links_per_span: u32,
     /// The maximum attributes per event before discarding
+    #[serde(default = "default_max_attributes_per_event")]
     pub(crate) max_attributes_per_event: u32,
     /// The maximum attributes per link before discarding
+    #[serde(default = "default_max_attributes_per_link")]
     pub(crate) max_attributes_per_link: u32,
     /// Default attributes
+    #[serde(default)]
     pub(crate) attributes: BTreeMap<String, AttributeValue>,
 }
 
@@ -386,7 +396,7 @@ fn default_sampler() -> SamplerOption {
 impl Default for Trace {
     fn default() -> Self {
         Self {
-            service_name: "router".to_string(),
+            service_name: default_service_name(),
             service_namespace: Default::default(),
             sampler: default_sampler(),
             parent_based_sampler: default_parent_based_sampler(),
@@ -400,6 +410,10 @@ impl Default for Trace {
     }
 }
 
+fn default_service_name() -> String {
+    // TODO change this in a follow up to `unknown_service` as per the spec https://opentelemetry.io/docs/concepts/sdk-configuration/general-sdk-configuration/#otel_service_name
+    "router".to_string()
+}
 fn default_max_events_per_span() -> u32 {
     SpanLimits::default().max_events_per_span
 }
